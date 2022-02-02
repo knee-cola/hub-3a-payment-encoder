@@ -9,7 +9,7 @@ Nedostaje slijedeće:
 
 Ovaj enkoder opći platni nalog pretvara u tekstualni format pogodan za generiranje 2D bar koda.
 
-**NAPOMENA:** ovaj lib **ne generira** bitmapu 2D bar koda, već samo tekst koji se u taj barcode zapisuje. Za generiranje 2D bitmape možete upotrijebiti neki drugi library kao što je [PDF417-js](https://github.com/bkuzmic/pdf417-js) 
+**NAPOMENA:** ovaj lib **ne generira** bitmapu 2D bar koda, već samo tekst koji se u taj barcode zapisuje. Za generiranje 2D bitmape možete upotrijebiti neki drugi library kao što je [PDF417-js](https://www.npmjs.com/package/pdf417) 
 
 Ovaj library izveden iz originalne biblioteke [https://github.com/Bikonja/generator-barkoda-uplatnica](https://github.com/Bikonja/generator-barkoda-uplatnica)
 
