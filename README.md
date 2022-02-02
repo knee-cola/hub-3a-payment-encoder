@@ -1,4 +1,12 @@
+# NEDOVRŠENO
+**NAPOMENA:** ovaj library još nije dovršen, niti je dostupan na NPM
+
+Nedostaje slijedeće:
+* build setup (typescript / webpack)
+* unit tests (jest)
+
 # hub-3a-payment-encoder
+
 Ovaj enkoder opći platni nalog pretvara u format pogodan za generiranje 2D bar koda.
 
 Ovaj library je TypeScript verzija originalne biblioteke [https://github.com/Bikonja/generator-barkoda-uplatnica](https://github.com/Bikonja/generator-barkoda-uplatnica)
