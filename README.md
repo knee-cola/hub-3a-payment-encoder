@@ -7,9 +7,11 @@ Nedostaje slijedeće:
 
 # hub-3a-payment-encoder
 
-Ovaj enkoder opći platni nalog pretvara u format pogodan za generiranje 2D bar koda.
+Ovaj enkoder opći platni nalog pretvara u tekstualni format pogodan za generiranje 2D bar koda.
 
-Ovaj library je TypeScript verzija originalne biblioteke [https://github.com/Bikonja/generator-barkoda-uplatnica](https://github.com/Bikonja/generator-barkoda-uplatnica)
+**NAPOMENA:** ovaj lib **ne generira** bitmapu 2D bar koda, već samo tekst koji se u taj barcode zapisuje. Za generiranje 2D bitmape možete upotrijebiti neki drugi library kao što je [PDF417-js](https://github.com/bkuzmic/pdf417-js) 
+
+Ovaj library izveden iz originalne biblioteke [https://github.com/Bikonja/generator-barkoda-uplatnica](https://github.com/Bikonja/generator-barkoda-uplatnica)
 
 # How to install
 ```bash
