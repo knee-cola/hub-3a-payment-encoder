@@ -1,0 +1,22 @@
+{
+  "name": "hub-3a-payment-encoder",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/knee-cola/hub-3a-payment-encoder.git"
+  },
+  "author": "Nikola Derežić",
+  "license": "LGPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/knee-cola/hub-3a-payment-encoder/issues"
+  },
+  "homepage": "https://github.com/knee-cola/hub-3a-payment-encoder#readme",
+  "dependencies": {
+    "ibantools": "^4.1.3"
+  }
+}
