@@ -1,1 +1,5 @@
 node_modules
+
+# Serena AI assistant
+.serena/
+*.serena-memory

@@ -1,0 +1,33 @@
+{
+  "mcpServers": {
+    "serena": {
+      "command": "docker",
+     "args": [
+        "run",
+        "--rm",
+        "-i",
+        "--network", "host",
+        "-v", "./:/workspaces/projects",
+        "ghcr.io/oraios/serena:0.1.4",
+        "serena", "start-mcp-server",
+        "--transport", "stdio",
+        "--project", "/workspaces/projects",
+        "--enable-web-dashboard", "false"
+      ],
+      "autoApprove": {
+        "commands": [
+          "search_for_pattern",
+          "read_file",
+          "find_file",
+          "list_dir",
+          "think_about_collected_information",
+          "replace_regex"
+        ]
+      }
+    },
+    "context7": {
+      "type": "http",
+      "url": "https://mcp.context7.com/mcp"
+    }
+  }
+}
