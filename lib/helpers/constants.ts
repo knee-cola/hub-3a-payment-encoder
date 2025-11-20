@@ -30,40 +30,42 @@ export const MaxLengths = {
 
 export enum ValidationResult {
     OK = 0,
-    
-    PricePatternInvalid = 1,
-    PriceMaxLengthExceeded = 2,
-    
-    PayerNameInvalid = 4,
-    PayerNameMaxLengthExceeded = 8,
-    
-    PayerAddressInvalid = 16,
-    PayerAddressMaxLengthExceeded = 32,
-    
-    PayerHQInvalid = 64,
-    PayerHQMaxLengthExceeded = 128,
-    
-    ReceiverNameInvalid = 256,
-    ReceiverNameMaxLengthExceeded = 512,
-    
-    ReceiverAddressInvalid = 1024,
-    ReceiverAddressMaxLengthExceeded = 2048,
-    
-    ReceiverHQInvalid = 4096,
-    ReceiverHQMaxLengthExceeded = 8192,
-    
-    IBANInvalid = 16384,
-    IBANMaxLengthExceeded = 32768,
-    
-    PaymentModelInvalid = 65536,
-    PaymentModelMaxLengthExceeded = 131072,
-    
-    CalloutNumberInvalid = 262144,
-    CalloutNumberMaxLengthExceeded = 524288,
-    
-    IntentCodeInvalid = 1048576,
-    IntentCodeMaxLengthExceeded = 2097152,
-    
-    DescriptionInvalid = 4194304,
-    DescriptionMaxLengthExceeded = 8388608
+
+    InvalidPaymentParams = 1,
+
+    PricePatternInvalid = 2,
+    PriceMaxLengthExceeded = 4,
+
+    PayerNameInvalid = 8,
+    PayerNameMaxLengthExceeded = 16,
+
+    PayerAddressInvalid = 32,
+    PayerAddressMaxLengthExceeded = 64,
+
+    PayerHQInvalid = 128,
+    PayerHQMaxLengthExceeded = 256,
+
+    ReceiverNameInvalid = 512,
+    ReceiverNameMaxLengthExceeded = 1024,
+
+    ReceiverAddressInvalid = 2048,
+    ReceiverAddressMaxLengthExceeded = 4096,
+
+    ReceiverHQInvalid = 8192,
+    ReceiverHQMaxLengthExceeded = 16384,
+
+    IBANInvalid = 32768,
+    IBANMaxLengthExceeded = 65536,
+
+    PaymentModelInvalid = 131072,
+    PaymentModelMaxLengthExceeded = 262144,
+
+    CalloutNumberInvalid = 524288,
+    CalloutNumberMaxLengthExceeded = 1048576,
+
+    IntentCodeInvalid = 2097152,
+    IntentCodeMaxLengthExceeded = 4194304,
+
+    DescriptionInvalid = 8388608,
+    DescriptionMaxLengthExceeded = 16777216
 }

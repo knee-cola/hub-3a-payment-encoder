@@ -44,10 +44,10 @@ export const EncodePrice = (price:string):string => {
 
 /**
  * Concatinates give list of string
- * @param {string[]} args list of strings 
- * @returns 
+ * @param {string[]} args list of strings
+ * @returns
  */
-export const ConcatenateStrings = (...args:Array<string>):string => {
+export const ConcatenateStrings = (...args:Array<string | undefined>):string => {
     let res = '';
 
     for (var i = 0; i < args.length; ++i) {
@@ -55,6 +55,6 @@ export const ConcatenateStrings = (...args:Array<string>):string => {
             res += args[i];
         }
     }
-    
+
     return res;
 }

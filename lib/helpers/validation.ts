@@ -52,7 +52,7 @@ export function IsIBANValid(iban: string):boolean {
  */
 export function ValidatePaymentParams(paymentParams: PaymentParams, settings:BarcodePaymentSettings):ValidationResult {
     if (!(IsPaymentParams(paymentParams))) {
-        return ValidationResult.OK;
+        return ValidationResult.InvalidPaymentParams;
     }
 
     let result: ValidationResult = ValidationResult.OK;
