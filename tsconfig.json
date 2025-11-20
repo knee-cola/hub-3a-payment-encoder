@@ -1,0 +1,31 @@
+{
+  "compilerOptions": {
+    // Target modern JavaScript for better performance
+    "target": "ES2020",
+    "module": "ESNext",
+    "lib": ["ES2020"],
+
+    // Generate .d.ts declaration files for TypeScript consumers
+    "declaration": true,
+    "declarationMap": true,
+
+    // Output configuration
+    "outDir": "./dist",
+    "rootDir": "./lib",
+
+    // Strict type checking
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+
+    // Module resolution
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+
+    // Source maps for debugging
+    "sourceMap": true
+  },
+  "include": ["lib/**/*"],
+  "exclude": ["node_modules", "dist", "tests", "**/*.test.ts"]
+}

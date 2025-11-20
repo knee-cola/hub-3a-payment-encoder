@@ -33,7 +33,7 @@ export const PadLeft = (str:string, len:number, pad:string):string => {
     return str;
 }
 
-export const StringNotDefinedOrEmpty = (str):boolean => {
+export const StringNotDefinedOrEmpty = (str: string | undefined | null):boolean => {
     return str === undefined || str === null || str.length == 0;
 }
 

@@ -1,9 +1,25 @@
 {
   "name": "hub-3a-payment-encoder",
   "version": "1.0.0",
-  "description": "",
-  "main": "dist/index.js",
+  "description": "Croatian HUB-3A payment slip encoder for 2D barcode generation",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
   "scripts": {
+    "build": "tsc",
+    "prepublishOnly": "npm test && npm run build",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage"
