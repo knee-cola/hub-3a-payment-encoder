@@ -53,9 +53,9 @@ lib/
 
 **Encoding Constants** (lib/helpers/constants.ts)
 - `_header`: "HRVHUB30"
-- `_currency`: "HRK" (Croatian Kuna - note: Croatia now uses EUR)
+- `_currency`: "EUR"
 - `_delimiter`: Line feed character (0x0A)
-- `_paymentModelPrefix`: "HR"
+- `_paymentModelPrefix`: "HR" (for reference only - not used in encoding, users provide full model code)
 - Character whitelist for single-byte and two-byte Croatian characters (Š, Đ, Č, Ć, Ž)
 
 **String Length Calculation** (lib/helpers/stringHelpers.ts)
@@ -72,6 +72,7 @@ lib/
 
 **Payment Models** (lib/helpers/PaymentModels.ts)
 - Simple array of valid Croatian payment model codes (HR00-HR99)
+- **Important:** Models include the "HR" prefix (e.g., "HR00", "HR01") - users must provide the full code including prefix
 - Source: FINA website
 - TODO: Add validation rules specific to each model
 
@@ -96,6 +97,10 @@ The `ValidationResult` enum uses bitwise flags, so:
 ### Price Encoding
 
 Prices must be formatted as "123,55" (comma decimal separator) in input, but are encoded without the comma and zero-padded to 15 characters: "000000012355".
+
+### Payment Model Format
+
+Payment models **must include the "HR" prefix** in the input (e.g., "HR00", "HR01", "HR99"). The library does NOT add this prefix during encoding - it expects users to provide the complete model code. This matches the legacy implementation behavior.
 
 ### Character Encoding
 

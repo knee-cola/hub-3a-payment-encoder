@@ -38,7 +38,7 @@ export function EncodePayment(paymentParams:PaymentParams, settings:Partial<Barc
 		paymentParams.AdresaPrimatelja, _delimiter,
 		paymentParams.SjedistePrimatelja, _delimiter,
 		paymentParams.IBAN, _delimiter,
-		_paymentModelPrefix, paymentParams.ModelPlacanja, _delimiter,
+		paymentParams.ModelPlacanja, _delimiter,
 		paymentParams.PozivNaBroj, _delimiter,
 		paymentParams.SifraNamjene, _delimiter,
 		paymentParams.OpisPlacanja, _delimiter

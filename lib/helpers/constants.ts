@@ -3,14 +3,14 @@ export const _allowedSingleByteCharacters:Array<string> = [ "0", "1", "2", "3", 
 /** UTF-8 characters stored into two bytes  */
 export const _allowedTwoByteCharacters:Array<string> = [ "Š", "Đ", "Č", "Ć", "Ž", "š", "đ", "č", "ć", "ž" ]
 /** all allowed characters  */
-export const _allowedCharacters:Array<string> = { ..._allowedSingleByteCharacters,  ..._allowedTwoByteCharacters }
+export const _allowedCharacters:Array<string> = [ ..._allowedSingleByteCharacters,  ..._allowedTwoByteCharacters ];
 
 export const _priceFieldLength:number = 15;
 export const _pricePattern:string = "^[0-9]+,[0-9]{2}$";
 
 export const _delimiter:string = String.fromCharCode(0x0A);
 export const _header:string = "HRVHUB30";
-export const _currency:string = "HRK"
+export const _currency:string = "EUR"
 export const _paymentModelPrefix:string = "HR";
 
 export const MaxLengths = {
@@ -22,7 +22,7 @@ export const MaxLengths = {
     ReceiverAddress: 25,
     ReceiverHQ: 27,
     IBAN: 21,
-    PaymentModel: 2,
+    PaymentModel: 4,
     CalloutNumber: 22,
     IntentCode: 4,
     Description: 35

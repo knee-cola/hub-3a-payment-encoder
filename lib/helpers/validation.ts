@@ -1,6 +1,6 @@
 import { BarcodePaymentSettings } from "../types/BarcodePaymentSettings";
 import { IsPaymentParams, PaymentParams } from "../types/PaymentParams";
-import { MaxLengths, ValidationResult } from "./constants";
+import { _pricePattern, MaxLengths, ValidationResult } from "./constants";
 import { IntentCodes } from "./IntentCodes";
 import { PaymentModels } from "./PaymentModels";
 import { GetLength, StringNotDefinedOrEmpty } from "./stringHelpers";
@@ -64,7 +64,7 @@ export function ValidatePaymentParams(paymentParams: PaymentParams, settings:Bar
         result |= ValidationResult.PriceMaxLengthExceeded;
     }
 
-    if (!StringNotDefinedOrEmpty(paymentParams.Iznos) && (fieldLength == -1 || paymentParams.Iznos.match(_pricePattern) == null)) {
+    if (StringNotDefinedOrEmpty(paymentParams.Iznos) || (fieldLength == -1 || paymentParams.Iznos.match(_pricePattern) == null)) {
         result |= ValidationResult.PricePatternInvalid;
     }
 
@@ -74,7 +74,7 @@ export function ValidatePaymentParams(paymentParams: PaymentParams, settings:Bar
         result |= ValidationResult.PayerNameMaxLengthExceeded;
     }
 
-    if (!StringNotDefinedOrEmpty(paymentParams.ImePlatitelja) && fieldLength == -1) {
+    if (StringNotDefinedOrEmpty(paymentParams.ImePlatitelja) || fieldLength == -1) {
         result |= ValidationResult.PayerNameInvalid;
     }
 
@@ -84,7 +84,7 @@ export function ValidatePaymentParams(paymentParams: PaymentParams, settings:Bar
         result |= ValidationResult.PayerAddressMaxLengthExceeded;
     }
 
-    if (!StringNotDefinedOrEmpty(paymentParams.AdresaPlatitelja) && fieldLength == -1) {
+    if (StringNotDefinedOrEmpty(paymentParams.AdresaPlatitelja) || fieldLength == -1) {
         result |= ValidationResult.PayerAddressInvalid;
     }
 
@@ -94,7 +94,7 @@ export function ValidatePaymentParams(paymentParams: PaymentParams, settings:Bar
         result |= ValidationResult.PayerHQMaxLengthExceeded;
     }
 
-    if (!StringNotDefinedOrEmpty(paymentParams.SjedistePlatitelja) && fieldLength == -1) {
+    if (StringNotDefinedOrEmpty(paymentParams.SjedistePlatitelja) || fieldLength == -1) {
         result |= ValidationResult.PayerHQInvalid;
     }
 
@@ -104,7 +104,7 @@ export function ValidatePaymentParams(paymentParams: PaymentParams, settings:Bar
         result |= ValidationResult.ReceiverNameMaxLengthExceeded;
     }
 
-    if (!StringNotDefinedOrEmpty(paymentParams.Primatelj) && fieldLength == -1) {
+    if (StringNotDefinedOrEmpty(paymentParams.Primatelj) || fieldLength == -1) {
         result |= ValidationResult.ReceiverNameInvalid;
     }
 
@@ -114,7 +114,7 @@ export function ValidatePaymentParams(paymentParams: PaymentParams, settings:Bar
         result |= ValidationResult.ReceiverAddressMaxLengthExceeded;
     }
 
-    if (!StringNotDefinedOrEmpty(paymentParams.AdresaPrimatelja) && fieldLength == -1) {
+    if (StringNotDefinedOrEmpty(paymentParams.AdresaPrimatelja) || fieldLength == -1) {
         result |= ValidationResult.ReceiverAddressInvalid;
     }
 
@@ -124,7 +124,7 @@ export function ValidatePaymentParams(paymentParams: PaymentParams, settings:Bar
         result |= ValidationResult.ReceiverHQMaxLengthExceeded;
     }
 
-    if (!StringNotDefinedOrEmpty(paymentParams.SjedistePrimatelja) && fieldLength == -1) {
+    if (StringNotDefinedOrEmpty(paymentParams.SjedistePrimatelja) || fieldLength == -1) {
         result |= ValidationResult.ReceiverHQInvalid;
     }
 
@@ -134,7 +134,7 @@ export function ValidatePaymentParams(paymentParams: PaymentParams, settings:Bar
         result |= ValidationResult.IBANMaxLengthExceeded;
     }
 
-    if (!StringNotDefinedOrEmpty(paymentParams.IBAN) && fieldLength == -1) {
+    if (StringNotDefinedOrEmpty(paymentParams.IBAN) || fieldLength == -1) {
         result |= ValidationResult.IBANInvalid;
     }
 
@@ -190,7 +190,7 @@ export function ValidatePaymentParams(paymentParams: PaymentParams, settings:Bar
         result |= ValidationResult.DescriptionMaxLengthExceeded;
     }
 
-    if (!StringNotDefinedOrEmpty(paymentParams.OpisPlacanja) && fieldLength == -1) {
+    if (StringNotDefinedOrEmpty(paymentParams.OpisPlacanja) || fieldLength == -1) {
         result |= ValidationResult.DescriptionInvalid;
     }
 
