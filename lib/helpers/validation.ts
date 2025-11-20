@@ -1,9 +1,9 @@
-import { BarcodePaymentSettings } from "../types/BarcodePaymentSettings";
-import { IsPaymentParams, PaymentParams } from "../types/PaymentParams";
-import { _pricePattern, MaxLengths, ValidationResult } from "./constants";
-import { IntentCodes } from "./IntentCodes";
-import { PaymentModels } from "./PaymentModels";
-import { GetLength, StringNotDefinedOrEmpty } from "./stringHelpers";
+import { BarcodePaymentSettings } from "../types/BarcodePaymentSettings.js";
+import { IsPaymentParams, PaymentParams } from "../types/PaymentParams.js";
+import { _pricePattern, MaxLengths, ValidationResult } from "./constants.js";
+import { IntentCodes } from "./IntentCodes.js";
+import { PaymentModels } from "./PaymentModels.js";
+import { GetLength, StringNotDefinedOrEmpty } from "./stringHelpers.js";
 import { isValidIBAN } from 'ibantools';
 
 /**
@@ -25,14 +25,21 @@ export function IsIBANValid(iban: string):boolean {
 }
 
 /**
- * (not implemented) Validates callout number
- * @param calloutNumber callout number
- * @param paymentModel model number
- * @returns 
+ * Validates callout number (reference number) according to payment model
+ *
+ * **⚠️ NOT CURRENTLY IMPLEMENTED** - This function always returns `true`.
+ * Proper validation by payment model is not yet implemented.
+ *
+ * @param calloutNumber - The reference number (poziv na broj) to validate
+ * @param paymentModel - The payment model code (e.g., "HR00", "HR01")
+ * @returns Always returns `true` - validation not implemented
+ *
+ * @see https://www.fina.hr/ngsite/content/download/13714/208442/1
  */
+
  export function IsCalloutNumberValid(calloutNumber: string, paymentModel: string):boolean {
     // TODO: Implement callout number validation by model
-    // https://www.fina.hr/documents/52450/238316/Jedinstveni-pregled-osnovnih-modela-poziva-na-broj_4.8.2018.pdf/501b565f-8984-2441-ffb6-e5ec1b1fd3bf
+    // https://www.fina.hr/ngsite/content/download/13714/208442/1
     return true;
 }
 

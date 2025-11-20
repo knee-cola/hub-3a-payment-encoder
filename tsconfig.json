@@ -20,7 +20,7 @@
     "forceConsistentCasingInFileNames": true,
 
     // Module resolution
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "resolveJsonModule": true,
 
     // Source maps for debugging

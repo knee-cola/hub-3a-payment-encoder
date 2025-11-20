@@ -62,6 +62,17 @@ export interface PaymentParams {
 - All fields are strings, including `Iznos`
 - For Croatian alphabet characters (Š, Đ, Č, Ć, Ž), each character counts as 2 bytes
 
+## Validation Functions
+
+The library exports several validation functions:
+- `IsIBANValid(iban: string): boolean` - Validates IBAN format using the ibantools library
+- `IsPaymentModelValid(paymentModel: string): boolean` - Validates payment model codes (HR00-HR99)
+- `IsIntentCodeValid(intentCode: string): boolean` - Validates SEPA purpose codes
+- `IsCalloutNumberValid(calloutNumber: string, paymentModel: string): boolean` - **⚠️ NOT IMPLEMENTED** - Always returns `true`. Proper validation by payment model is not yet available.
+- `ValidatePaymentParams(paymentParams: PaymentParams, settings?: BarcodePaymentSettings): ValidationResult` - Validates all payment parameters
+
+**Note:** The `ValidateCalloutNumber` setting in `BarcodePaymentSettings` is available but has no effect since `IsCalloutNumberValid` is not implemented.
+
 # Examples
 ```typescript
 import { EncodePayment, ValidatePaymentParams, ValidationResult } from 'hub-3a-payment-encoder';

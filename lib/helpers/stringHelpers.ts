@@ -1,4 +1,4 @@
-import { _allowedSingleByteCharacters, _allowedTwoByteCharacters } from "./constants";
+import { _allowedSingleByteCharacters, _allowedTwoByteCharacters } from "./constants.js";
 
 /**
  * Utility function: calculates byte length of UTF-8 string

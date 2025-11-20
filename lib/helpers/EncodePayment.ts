@@ -1,8 +1,8 @@
-import { ValidationResult, _currency, _delimiter, _header, _paymentModelPrefix } from "./constants";
-import { ConcatenateStrings, EncodePrice } from "./stringHelpers";
-import { ValidatePaymentParams } from "./validation";
-import { BarcodePaymentSettings } from "../types/BarcodePaymentSettings";
-import { IsPaymentParams, PaymentParams } from "../types/PaymentParams";
+import { ValidationResult, _currency, _delimiter, _header, _paymentModelPrefix } from "./constants.js";
+import { ConcatenateStrings, EncodePrice } from "./stringHelpers.js";
+import { ValidatePaymentParams } from "./validation.js";
+import { BarcodePaymentSettings } from "../types/BarcodePaymentSettings.js";
+import { IsPaymentParams, PaymentParams } from "../types/PaymentParams.js";
 
 /**
  * Encodes playment parameters into HUB 3A compatible text format used in 2D bar codes
