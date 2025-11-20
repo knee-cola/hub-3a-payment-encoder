@@ -448,5 +448,189 @@ describe('Validation Functions', () => {
                 expect(ValidatePaymentParams(params, defaultSettings)).toBe(ValidationResult.OK);
             });
         });
+
+        describe('Edge cases - Invalid object handling', () => {
+            it('should fail validation for completely invalid payment params object', () => {
+                const invalidObj = {} as PaymentParams;
+                const result = ValidatePaymentParams(invalidObj, defaultSettings);
+                expect(result).not.toBe(ValidationResult.OK);
+                expect(result).not.toBe(null);
+            });
+
+            it('should fail validation for object missing required fields', () => {
+                const partialObj = {
+                    Iznos: '123,45',
+                    ImePlatitelja: 'Test'
+                } as PaymentParams;
+                const result = ValidatePaymentParams(partialObj, defaultSettings);
+                expect(result).not.toBe(ValidationResult.OK);
+                expect(result).not.toBe(null);
+            });
+        });
+
+        describe('Edge cases - Boundary conditions', () => {
+            it('should accept price at exactly 16 bytes', () => {
+                const params = { ...validParams, Iznos: '9999999999,99' };
+                expect(ValidatePaymentParams(params, defaultSettings)).toBe(ValidationResult.OK);
+            });
+
+            it('should accept payer name at exactly 30 bytes', () => {
+                const params = { ...validParams, ImePlatitelja: 'A'.repeat(30) };
+                expect(ValidatePaymentParams(params, defaultSettings)).toBe(ValidationResult.OK);
+            });
+
+            it('should accept payer address at exactly 27 bytes', () => {
+                const params = { ...validParams, AdresaPlatitelja: 'A'.repeat(27) };
+                expect(ValidatePaymentParams(params, defaultSettings)).toBe(ValidationResult.OK);
+            });
+
+            it('should accept receiver name at exactly 25 bytes', () => {
+                const params = { ...validParams, Primatelj: 'A'.repeat(25) };
+                expect(ValidatePaymentParams(params, defaultSettings)).toBe(ValidationResult.OK);
+            });
+
+            it('should accept IBAN at exactly 21 bytes', () => {
+                const params = { ...validParams, IBAN: 'HR1234567890123456789' };
+                const result = ValidatePaymentParams(params, { ...defaultSettings, ValidateIBAN: false });
+                expect(result).toBe(ValidationResult.OK);
+            });
+
+            it('should accept callout number at exactly 22 bytes', () => {
+                const params = { ...validParams, PozivNaBroj: '1'.repeat(22) };
+                expect(ValidatePaymentParams(params, defaultSettings)).toBe(ValidationResult.OK);
+            });
+
+            it('should accept intent code at exactly 4 bytes', () => {
+                const params = { ...validParams, SifraNamjene: 'SALA' };
+                expect(ValidatePaymentParams(params, defaultSettings)).toBe(ValidationResult.OK);
+            });
+
+            it('should accept description at exactly 35 bytes', () => {
+                const params = { ...validParams, OpisPlacanja: 'A'.repeat(35) };
+                expect(ValidatePaymentParams(params, defaultSettings)).toBe(ValidationResult.OK);
+            });
+        });
+
+        describe('Edge cases - ValidateCalloutNumber flag', () => {
+            it('should not validate callout number when flag is false', () => {
+                const params = { ...validParams, PozivNaBroj: 'any-format' };
+                const result = ValidatePaymentParams(params, { 
+                    ValidateIBAN: false, 
+                    ValidateCalloutNumber: false 
+                });
+                expect(result).toBe(ValidationResult.OK);
+            });
+
+            it('should attempt callout number validation when flag is true', () => {
+                const params = { ...validParams, PozivNaBroj: 'any-format' };
+                const result = ValidatePaymentParams(params, { 
+                    ValidateIBAN: false, 
+                    ValidateCalloutNumber: true 
+                });
+                expect(result).toBe(ValidationResult.OK);
+            });
+
+            it('should skip validation for empty callout number even when flag is true', () => {
+                const params = { ...validParams, PozivNaBroj: '' };
+                const result = ValidatePaymentParams(params, { 
+                    ValidateIBAN: false, 
+                    ValidateCalloutNumber: true 
+                });
+                expect(result).toBe(ValidationResult.OK);
+            });
+        });
+
+        describe('Edge cases - Price format variations', () => {
+            it('should accept price with leading zeros', () => {
+                const params = { ...validParams, Iznos: '00123,45' };
+                expect(ValidatePaymentParams(params, defaultSettings)).toBe(ValidationResult.OK);
+            });
+
+            it('should accept zero price', () => {
+                const params = { ...validParams, Iznos: '0,00' };
+                expect(ValidatePaymentParams(params, defaultSettings)).toBe(ValidationResult.OK);
+            });
+
+            it('should reject price with three decimal places', () => {
+                const params = { ...validParams, Iznos: '123,456' };
+                const result = ValidatePaymentParams(params, defaultSettings);
+                expect(result & ValidationResult.PricePatternInvalid).toBeTruthy();
+            });
+
+            it('should reject price with no decimal places', () => {
+                const params = { ...validParams, Iznos: '123,' };
+                const result = ValidatePaymentParams(params, defaultSettings);
+                expect(result & ValidationResult.PricePatternInvalid).toBeTruthy();
+            });
+
+            it('should reject price with dot instead of comma', () => {
+                const params = { ...validParams, Iznos: '123.45' };
+                const result = ValidatePaymentParams(params, defaultSettings);
+                expect(result & ValidationResult.PricePatternInvalid).toBeTruthy();
+            });
+        });
+
+        describe('Edge cases - IBAN variations', () => {
+            it('should reject IBAN with Croatian characters', () => {
+                const params = { ...validParams, IBAN: 'HR12100100518Š3000160' };
+                const result = ValidatePaymentParams(params, defaultSettings);
+                expect(result & ValidationResult.IBANInvalid).toBeTruthy();
+            });
+
+            it('should handle null IBAN', () => {
+                const params = { ...validParams, IBAN: null as any };
+                const result = ValidatePaymentParams(params, defaultSettings);
+                expect(result & ValidationResult.IBANInvalid).toBeTruthy();
+            });
+        });
+
+        describe('Edge cases - Allowed punctuation', () => {
+            it('should accept all allowed punctuation in payer name', () => {
+                const params = { ...validParams, ImePlatitelja: "O'Brien (Jr.)" };
+                expect(ValidatePaymentParams(params, defaultSettings)).toBe(ValidationResult.OK);
+            });
+
+            it('should accept comma and period in callout number', () => {
+                const params = { ...validParams, PozivNaBroj: '123-456.789' };
+                expect(ValidatePaymentParams(params, defaultSettings)).toBe(ValidationResult.OK);
+            });
+        });
+
+        describe('Edge cases - Null and undefined values', () => {
+            it('should reject undefined price', () => {
+                const params = { ...validParams, Iznos: undefined as any };
+                const result = ValidatePaymentParams(params, defaultSettings);
+                expect(result & ValidationResult.PricePatternInvalid).toBeTruthy();
+            });
+
+            it('should reject null payer name', () => {
+                const params = { ...validParams, ImePlatitelja: null as any };
+                const result = ValidatePaymentParams(params, defaultSettings);
+                expect(result & ValidationResult.PayerNameInvalid).toBeTruthy();
+            });
+
+            it('should handle undefined optional fields gracefully', () => {
+                const params = { 
+                    ...validParams, 
+                    PozivNaBroj: undefined as any,
+                    SifraNamjene: undefined as any
+                };
+                const result = ValidatePaymentParams(params, defaultSettings);
+                expect(result).toBe(ValidationResult.OK);
+            });
+        });
+
+        describe('Edge cases - All Croatian characters', () => {
+            it('should handle all Croatian characters in various fields', () => {
+                const croatianChars = 'ŠĐČĆŽšđčćž';
+                const params = {
+                    ...validParams,
+                    ImePlatitelja: croatianChars + 'AAAAA',
+                    AdresaPlatitelja: croatianChars,
+                    OpisPlacanja: croatianChars + 'A'.repeat(15)
+                };
+                expect(ValidatePaymentParams(params, defaultSettings)).toBe(ValidationResult.OK);
+            });
+        });
     });
 });
