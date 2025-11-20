@@ -1,31 +1,31 @@
 # hub-3a-payment-encoder
 
-Ovaj enkoder opći platni nalog pretvara u tekstualni format pogodan za generiranje 2D bar koda.
+This encoder converts Croatian HUB-3A payment slips into text format suitable for 2D barcode generation.
 
-**NAPOMENA:** ovaj lib **ne generira** bitmapu 2D bar koda, već samo tekst koji se u taj barcode zapisuje. Za generiranje 2D bitmape možete upotrijebiti neki drugi library kao što je [PDF417-js](https://www.npmjs.com/package/pdf417) 
+**NOTE:** This library does **not generate** the 2D barcode bitmap, only the text that is encoded in the barcode. To generate the actual 2D bitmap, you can use another library such as [PDF417-js](https://www.npmjs.com/package/pdf417)
 
-Ovaj library izveden iz originalne biblioteke [https://github.com/Bikonja/generator-barkoda-uplatnica](https://github.com/Bikonja/generator-barkoda-uplatnica)
+This library is derived from the original library [https://github.com/Bikonja/generator-barkoda-uplatnica](https://github.com/Bikonja/generator-barkoda-uplatnica)
 
-## Status projekta
+## Project Status
 
-✅ **Kompletno testiran** - 146 unit testova s 96.57% pokrivenošću koda
-⚠️ **U razvoju** - još nije dostupan na NPM
-⚠️ **Nedostaje** - build setup (TypeScript kompajliranje)
+✅ **Fully tested** - 146 unit tests with 96.57% code coverage
+⚠️ **In development** - not yet available on NPM
+⚠️ **Missing** - build setup (TypeScript compilation)
 
-## Legacy implementacija
+## Legacy Implementation
 
-U direktoriju `docs/BarcodePayment.js` nalazi se originalna JavaScript implementacija koja je korištena kao referenca za TypeScript verziju. Legacy verzija podržava:
-- jQuery dependency za array operacije
-- Singleton pattern s globalnim `window.BarcodePayment` objektom
-- Ručnu validaciju bez IBAN biblioteke
-- Podršku za HRK valutu (stara implementacija)
+The original JavaScript implementation used as a reference for the TypeScript version can be found in the `docs/BarcodePayment.js` directory. The legacy version supports:
+- jQuery dependency for array operations
+- Singleton pattern with global `window.BarcodePayment` object
+- Manual validation without IBAN library
+- HRK currency support (old implementation)
 
-**Napomena:** Nova TypeScript implementacija koristi:
-- Moderan ES6+ TypeScript kod
-- `ibantools` biblioteku za IBAN validaciju
-- EUR valutu (prema važećem standardu)
-- Funkcijski pristup umjesto singleton patterna
-- Poboljšanu akumulaciju grešaka (bitwise OR)
+**Note:** The new TypeScript implementation uses:
+- Modern ES6+ TypeScript code
+- `ibantools` library for IBAN validation
+- EUR currency (according to current standard)
+- Functional approach instead of singleton pattern
+- Improved error accumulation (bitwise OR)
 
 # How to install
 ```bash
@@ -39,8 +39,8 @@ npm i hub-3a-payment-encoder
 Encodes playment parameters into HUB 3A compatible text format used in 2D bar codes
 
 **Params:**
-* *paymentParams*:`PaymentParams` = platni nalog
-* *settings*:`Partial<BarcodePaymentSettings>` = (opcionalno) validacijske postavke
+* *paymentParams*:`PaymentParams` = payment slip data
+* *settings*:`Partial<BarcodePaymentSettings>` = (optional) validation settings
 
 **Returns:** HUB 3A 2D barcode string
 
@@ -62,18 +62,18 @@ export interface PaymentParams {
 }
 ```
 
-**Važne napomene:**
-- `Iznos` - mora biti formatiran s **zarezom** kao decimalnim separatorom (npr. "123,45", ne "123.45")
-- `ModelPlacanja` - mora sadržavati **"HR" prefix** (npr. "HR00", "HR01", "HR99")
-- Sva polja su stringovi, uključujući `Iznos`
-- Za hrvatsku abecedu (Š, Đ, Č, Ć, Ž) svaki znak broji se kao 2 bajta
+**Important notes:**
+- `Iznos` - must be formatted with a **comma** as the decimal separator (e.g., "123,45", not "123.45")
+- `ModelPlacanja` - must contain the **"HR" prefix** (e.g., "HR00", "HR01", "HR99")
+- All fields are strings, including `Iznos`
+- For Croatian alphabet characters (Š, Đ, Č, Ć, Ž), each character counts as 2 bytes
 
 # Examples
 ```typescript
 import { EncodePayment, ValidatePaymentParams, ValidationResult } from 'hub-3a-payment-encoder';
 
 const paymentParams = {
-    Iznos:"123,55",  // NAPOMENA: koristite zarez, ne točku!
+    Iznos:"123,55",  // NOTE: use comma, not period!
     ImePlatitelja:"Ivan Horvat",
     AdresaPlatitelja:"Ilica 23",
     SjedistePlatitelja:"10000 Zagreb",
@@ -81,13 +81,13 @@ const paymentParams = {
     AdresaPrimatelja:"FOLNEGOVIĆEVA 1",
     SjedistePrimatelja:"ZAGREB",
     IBAN:"HR8924020061100679445",
-    ModelPlacanja: "HR01",  // MORA sadržavati "HR" prefix!
+    ModelPlacanja: "HR01",  // MUST contain "HR" prefix!
     PozivNaBroj:"1231213-33452457-12386",
     SifraNamjene:"WTER",
     OpisPlacanja:"RAČUN BROJ 12362444",
 };
 
-// Opcija 1: Eksplicitna validacija prije enkodiranja
+// Option 1: Explicit validation before encoding
 const validation_result = ValidatePaymentParams(paymentParams, {
     ValidateIBAN: true,
     ValidateCalloutNumber: false
@@ -96,7 +96,7 @@ const validation_result = ValidatePaymentParams(paymentParams, {
 if(validation_result !== ValidationResult.OK) {
     console.log(`Payment params are invalid - validation result = ${validation_result}`);
 
-    // Možete provjeriti specifične greške koristeći bitwise operatore
+    // You can check for specific errors using bitwise operators
     if(validation_result & ValidationResult.IBANInvalid) {
         console.log("IBAN is invalid");
     }
@@ -105,49 +105,49 @@ if(validation_result !== ValidationResult.OK) {
     }
 } else {
     const hub3a_text = EncodePayment(paymentParams);
-    // ... generirani `hub3a_text` dalje prosljeđujemo library-u za generiranje 2D bar koda
+    // ... pass the generated `hub3a_text` to a 2D barcode generation library
 }
 
-// Opcija 2: Direktno enkodiranje (s automatskom validacijom)
+// Option 2: Direct encoding (with automatic validation)
 try {
     const hub3a_text = EncodePayment(paymentParams, {
         ValidateIBAN: true,
         ValidateCalloutNumber: false
     });
 
-    // ... generirani `hub3a_text` dalje prosljeđujemo library-u za generiranje 2D bar koda
+    // ... pass the generated `hub3a_text` to a 2D barcode generation library
 
 } catch(ex: any) {
-    // EncodePayment radi validaciju sadržaja naloga
-    // -> ako validacija kaže da nešto nije u redu biti će bačena greška
-    console.log("Nalog nije prošao validaciju:", ex.message);
+    // EncodePayment validates the payment slip data
+    // -> if validation fails, an error will be thrown
+    console.log("Payment slip failed validation:", ex.message);
 }
 
 ```
 # Testing
 
-Projekt koristi Jest za unit testiranje.
+The project uses Jest for unit testing.
 
-## Pokretanje testova
+## Running tests
 
 ```bash
-# Pokreni sve testove
+# Run all tests
 npm test
 
-# Pokreni testove u watch modu (automatski re-run pri promjenama)
+# Run tests in watch mode (automatically re-run on changes)
 npm run test:watch
 
-# Pokreni testove s izvještajem o pokrivenosti koda
+# Run tests with code coverage report
 npm run test:coverage
 ```
 
-## Test pokrivenost
+## Test coverage
 
-Trenutna pokrivenost: **96.57%**
+Current coverage: **96.57%**
 
-Test suite uključuje:
-- **validation.test.ts** - 94 testa za sve validacijske funkcije
-- **encoding.test.ts** - 36 testova za HUB-3A enkodiranje
-- **stringHelpers.test.ts** - 16 testova za helper funkcije
+The test suite includes:
+- **validation.test.ts** - 94 tests for all validation functions
+- **encoding.test.ts** - 36 tests for HUB-3A encoding
+- **stringHelpers.test.ts** - 16 tests for helper functions
 
-Svi testovi su napisani temeljem ponašanja legacy `BarcodePayment.js` implementacije.
+All tests are written based on the behavior of the legacy `BarcodePayment.js` implementation.
