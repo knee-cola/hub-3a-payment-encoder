@@ -2,5 +2,7 @@ node_modules
 
 # Serena AI assistant
 .serena/
-*.serena-memorycoverage/
-node_modules/
+*.serena-memory
+
+# Test coverage reports
+coverage/
