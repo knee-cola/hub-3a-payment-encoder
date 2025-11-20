@@ -450,21 +450,29 @@ describe('Validation Functions', () => {
         });
 
         describe('Edge cases - Invalid object handling', () => {
-            it('should fail validation for completely invalid payment params object', () => {
+            it('should return InvalidPaymentParams for completely invalid payment params object', () => {
                 const invalidObj = {} as PaymentParams;
                 const result = ValidatePaymentParams(invalidObj, defaultSettings);
-                expect(result).not.toBe(ValidationResult.OK);
-                expect(result).not.toBe(null);
+                expect(result).toBe(ValidationResult.InvalidPaymentParams);
             });
 
-            it('should fail validation for object missing required fields', () => {
+            it('should return InvalidPaymentParams for object missing required fields', () => {
                 const partialObj = {
                     Iznos: '123,45',
                     ImePlatitelja: 'Test'
                 } as PaymentParams;
                 const result = ValidatePaymentParams(partialObj, defaultSettings);
-                expect(result).not.toBe(ValidationResult.OK);
-                expect(result).not.toBe(null);
+                expect(result).toBe(ValidationResult.InvalidPaymentParams);
+            });
+
+            it('should return InvalidPaymentParams for null object', () => {
+                const result = ValidatePaymentParams(null as any, defaultSettings);
+                expect(result).toBe(ValidationResult.InvalidPaymentParams);
+            });
+
+            it('should return InvalidPaymentParams for undefined object', () => {
+                const result = ValidatePaymentParams(undefined as any, defaultSettings);
+                expect(result).toBe(ValidationResult.InvalidPaymentParams);
             });
         });
 
@@ -577,10 +585,10 @@ describe('Validation Functions', () => {
                 expect(result & ValidationResult.IBANInvalid).toBeTruthy();
             });
 
-            it('should handle null IBAN', () => {
+            it('should return InvalidPaymentParams for null IBAN', () => {
                 const params = { ...validParams, IBAN: null as any };
                 const result = ValidatePaymentParams(params, defaultSettings);
-                expect(result & ValidationResult.IBANInvalid).toBeTruthy();
+                expect(result).toBe(ValidationResult.InvalidPaymentParams);
             });
         });
 
@@ -597,26 +605,26 @@ describe('Validation Functions', () => {
         });
 
         describe('Edge cases - Null and undefined values', () => {
-            it('should reject undefined price', () => {
+            it('should return InvalidPaymentParams for undefined price', () => {
                 const params = { ...validParams, Iznos: undefined as any };
                 const result = ValidatePaymentParams(params, defaultSettings);
-                expect(result & ValidationResult.PricePatternInvalid).toBeTruthy();
+                expect(result).toBe(ValidationResult.InvalidPaymentParams);
             });
 
-            it('should reject null payer name', () => {
+            it('should return InvalidPaymentParams for null payer name', () => {
                 const params = { ...validParams, ImePlatitelja: null as any };
                 const result = ValidatePaymentParams(params, defaultSettings);
-                expect(result & ValidationResult.PayerNameInvalid).toBeTruthy();
+                expect(result).toBe(ValidationResult.InvalidPaymentParams);
             });
 
-            it('should handle undefined optional fields gracefully', () => {
-                const params = { 
-                    ...validParams, 
+            it('should return InvalidPaymentParams for undefined optional fields', () => {
+                const params = {
+                    ...validParams,
                     PozivNaBroj: undefined as any,
                     SifraNamjene: undefined as any
                 };
                 const result = ValidatePaymentParams(params, defaultSettings);
-                expect(result).toBe(ValidationResult.OK);
+                expect(result).toBe(ValidationResult.InvalidPaymentParams);
             });
         });
 

@@ -89,7 +89,7 @@ describe('EncodePayment', () => {
     describe('Error handling', () => {
         it('should throw error for invalid object', () => {
             const invalidObj = { someField: 'value' } as any;
-            expect(() => EncodePayment(invalidObj)).toThrow('param validation failed');
+            expect(() => EncodePayment(invalidObj)).toThrow('invalid payment params object');
         });
 
         it('should throw error when validation fails - empty price', () => {
