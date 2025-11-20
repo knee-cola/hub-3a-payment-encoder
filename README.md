@@ -6,12 +6,6 @@ This encoder converts Croatian HUB-3A payment slips into text format suitable fo
 
 This library is derived from the original library [https://github.com/Bikonja/generator-barkoda-uplatnica](https://github.com/Bikonja/generator-barkoda-uplatnica)
 
-## Project Status
-
-✅ **Fully tested** - 146 unit tests with 96.57% code coverage
-⚠️ **In development** - not yet available on NPM
-⚠️ **Missing** - build setup (TypeScript compilation)
-
 ## Legacy Implementation
 
 The original JavaScript implementation used as a reference for the TypeScript version can be found in the `docs/BarcodePayment.js` directory. The legacy version supports:
