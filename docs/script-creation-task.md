@@ -141,3 +141,4 @@ Additional info:
 - you can install required NPM packages for working with PDF documents if none are available
 - there are 47 tables in total: HR01,HR02,HR03,HR04,HR05,HR06,HR07,HR08,HR09,HR10,HR11,HR12,HR13,HR14,HR15,HR16,HR17,HR18,HR19,HR23,HR24,HR26,HR27,HR28,HR29,HR30,HR31,HR33,HR34,HR35,HR40,HR41,HR42,HR43,HR55,HR62,HR63,HR64,HR65,HR67,HR68,HR69,HR99,HR25,HR83,HR84,HR50
 - there can be multiple tables per page (1 to 3)
+- text flow in the document might not allign with the cells it is visually displayed in - script should take this into account
