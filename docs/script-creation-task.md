@@ -133,7 +133,7 @@ Additional info:
   - in case of an empty cell store "" in JSON
   - in case cell contains only "-" store it as "-"
 - store script in @docs/extract-fina-data.js file
-- script should store outpit in @docs/fina.json file
+- script should store output in @docs/fina.json file
 - all tables have 6 rows and 5 columns
 - output JSON should ne a flat object ({"HR01": {...}, "HR02": {...}})
 - no special handling is needed for croatian characters - copy them as they are
