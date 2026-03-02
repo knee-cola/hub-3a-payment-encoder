@@ -32,6 +32,7 @@ export const PaymentModels:Array<{model:string}> = [
 		{ model: "HR31" },
 		{ model: "HR33" },
 		{ model: "HR34" },
+		{ model: "HR35" },
 		{ model: "HR40" },
 		{ model: "HR41" },
 		{ model: "HR42" },
