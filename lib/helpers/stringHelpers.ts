@@ -1,9 +1,12 @@
 import { _allowedSingleByteCharacters, _allowedTwoByteCharacters } from "./constants.js";
 
 /**
- * Utility function: calculates byte length of UTF-8 string
+ * Utility function: calculates byte length of a string according to allowed characters.
  * @param {string} str string which length is to be determined
  * @returns {number} length of a string
+ * @description the length calculation counts the number of characters and NOT the number
+ * of bytes required to store the string as specified in https://www.hub.hr/sites/default/files/inline-files/2dbc_0.pdf
+ * ("Duljina polja definirana je kao najveći broj znakova u polju, ne kao broj bajtova (okteta).")
  */
 export const GetLength:(str:string)=>number = (str:string) => {
     let len = 0;
@@ -13,7 +16,7 @@ export const GetLength:(str:string)=>number = (str:string) => {
             let c = str[i];
             
             if (_allowedTwoByteCharacters.indexOf(c) !== -1) {
-                len += 2;
+                len += 1;
             } else if (_allowedSingleByteCharacters.indexOf(c) !== -1) {
                 len += 1;
             } else {

@@ -13,6 +13,10 @@ export const _header:string = "HRVHUB30";
 export const _currency:string = "EUR"
 export const _paymentModelPrefix:string = "HR";
 
+/**
+ * The maximum length of the whole string to be encoded into QR code.
+ * @link https://www.hub.hr/sites/default/files/inline-files/2dbc_0.pdf
+ */
 export const MaxLengths = {
     Price: 16,
     PayerName: 30,
