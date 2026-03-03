@@ -156,3 +156,7 @@ The test suite includes:
 - **stringHelpers.test.ts** - 16 tests for helper functions
 
 All tests are written based on the behavior of the legacy `BarcodePayment.js` implementation.
+
+# Documents
+
+* https://www.hub.hr/sites/default/files/inline-files/2dbc_0.pdf
