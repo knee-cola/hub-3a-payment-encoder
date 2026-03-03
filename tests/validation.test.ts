@@ -429,22 +429,22 @@ describe('Validation Functions', () => {
         });
 
         describe('Croatian character byte length handling', () => {
-            it('should count Croatian characters as 2 bytes', () => {
+            it('should count Croatian characters as single characters and not as double bytes', () => {
                 // 'Š' counts as 2 bytes, so 15 of them = 30 bytes (max is 30)
-                const params = { ...validParams, ImePlatitelja: 'Š'.repeat(15) };
+                const params = { ...validParams, ImePlatitelja: 'Š'.repeat(30) };
                 expect(ValidatePaymentParams(params, defaultSettings)).toBe(ValidationResult.OK);
             });
 
-            it('should reject when Croatian characters exceed byte limit', () => {
+            it('should reject when Croatian characters exceed character limit', () => {
                 // 'Š' counts as 2 bytes, so 16 of them = 32 bytes (max is 30)
-                const params = { ...validParams, ImePlatitelja: 'Š'.repeat(16) };
+                const params = { ...validParams, ImePlatitelja: 'Š'.repeat(31) };
                 const result = ValidatePaymentParams(params, defaultSettings);
                 expect(result & ValidationResult.PayerNameMaxLengthExceeded).toBeTruthy();
             });
 
             it('should handle mixed single and double byte characters', () => {
-                // 10 regular chars (10 bytes) + 10 Croatian chars (20 bytes) = 30 bytes
-                const params = { ...validParams, ImePlatitelja: 'A'.repeat(10) + 'Š'.repeat(10) };
+                // 15 regular chars (15 bytes) + 15 Croatian chars (30 bytes) = 30 characters (45 bytes)
+                const params = { ...validParams, ImePlatitelja: 'A'.repeat(15) + 'Š'.repeat(15) };
                 expect(ValidatePaymentParams(params, defaultSettings)).toBe(ValidationResult.OK);
             });
         });
