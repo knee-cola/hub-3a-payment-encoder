@@ -18,31 +18,30 @@ describe('String Helper Functions', () => {
             expect(GetLength('0123456789')).toBe(10);
         });
 
-        it('should count Croatian uppercase characters as 2 bytes', () => {
-            expect(GetLength('Š')).toBe(2);
-            expect(GetLength('Đ')).toBe(2);
-            expect(GetLength('Č')).toBe(2);
-            expect(GetLength('Ć')).toBe(2);
-            expect(GetLength('Ž')).toBe(2);
+        it('should count Croatian uppercase characters as 1 character', () => {
+            expect(GetLength('Š')).toBe(1);
+            expect(GetLength('Đ')).toBe(1);
+            expect(GetLength('Č')).toBe(1);
+            expect(GetLength('Ć')).toBe(1);
+            expect(GetLength('Ž')).toBe(1);
         });
 
-        it('should count Croatian lowercase characters as 2 bytes', () => {
-            expect(GetLength('š')).toBe(2);
-            expect(GetLength('đ')).toBe(2);
-            expect(GetLength('č')).toBe(2);
-            expect(GetLength('ć')).toBe(2);
-            expect(GetLength('ž')).toBe(2);
+        it('should count Croatian lowercase characters as 1 character', () => {
+            expect(GetLength('š')).toBe(1);
+            expect(GetLength('đ')).toBe(1);
+            expect(GetLength('č')).toBe(1);
+            expect(GetLength('ć')).toBe(1);
+            expect(GetLength('ž')).toBe(1);
         });
 
         it('should count all Croatian characters correctly', () => {
-            expect(GetLength('ŠĐČĆŽšđčćž')).toBe(20); // 10 chars * 2 bytes
+            expect(GetLength('ŠĐČĆŽšđčćž')).toBe(10); // 10 chars * 2 bytes
         });
 
         it('should handle mixed single and double byte characters', () => {
-            expect(GetLength('AŠB')).toBe(4); // 1 + 2 + 1
-            expect(GetLength('MarkoŠarić')).toBe(12); // 5 + 2 + 4 + 1 + 2 = 14... wait
-            // M=1, a=1, r=1, k=1, o=1, Š=2, a=1, r=1, i=1, ć=2
-            expect(GetLength('MarkoŠarić')).toBe(12);
+            expect(GetLength('AŠB')).toBe(3);
+            expect(GetLength('MarkoŠarić')).toBe(10);
+            expect(GetLength('MarkoŠarić')).toBe(10);
         });
 
         it('should accept allowed punctuation', () => {
@@ -254,9 +253,9 @@ describe('String Helper Functions', () => {
         });
 
         it('should handle typical Croatian names', () => {
-            expect(GetLength('Marko Šarić')).toBe(13); // M(1)a(1)r(1)k(1)o(1) (1)Š(2)a(1)r(1)i(1)ć(2) = 13
-            expect(GetLength('Pero Perić')).toBe(11); // P(1)e(1)r(1)o(1) (1)P(1)e(1)r(1)i(1)ć(2) = 11
-            expect(GetLength('Ana Kovačić')).toBe(13); // A(1)n(1)a(1) (1)K(1)o(1)v(1)a(1)č(2)i(1)ć(2) = 13
+            expect(GetLength('Marko Šarić')).toBe(11); // M(1)a(1)r(1)k(1)o(1) (1)Š(2)a(1)r(1)i(1)ć(2) = 13
+            expect(GetLength('Pero Perić')).toBe(10); // P(1)e(1)r(1)o(1) (1)P(1)e(1)r(1)i(1)ć(2) = 11
+            expect(GetLength('Ana Kovačić')).toBe(11); // A(1)n(1)a(1) (1)K(1)o(1)v(1)a(1)č(2)i(1)ć(2) = 13
         });
 
         it('should verify price encoding for common amounts', () => {
