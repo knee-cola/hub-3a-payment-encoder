@@ -18,5 +18,5 @@ export {
     GetLength,
     PaymentModels,
     MaxLengths,
-    ValidateIznos as isIznosValid
+    ValidateIznos
 };
