@@ -1,7 +1,7 @@
 import { ValidationResult, MaxLengths } from "./helpers/constants.js";
 import { EncodePayment } from "./helpers/EncodePayment.js";
 import { GetLength } from "./helpers/stringHelpers.js";
-import { IsIBANValid, IsPaymentModelValid, IsCalloutNumberValid, IsIntentCodeValid, ValidatePaymentParams } from "./helpers/validation.js";
+import { IsIBANValid, IsPaymentModelValid, IsCalloutNumberValid, IsIntentCodeValid, ValidatePaymentParams, ValidateIznos } from "./helpers/validation.js";
 
 import { PaymentModels } from "./helpers/PaymentModels.js";
 
@@ -17,5 +17,6 @@ export {
     ValidationResult,
     GetLength,
     PaymentModels,
-    MaxLengths
+    MaxLengths,
+    ValidateIznos as isIznosValid
 };

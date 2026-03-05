@@ -1,6 +1,6 @@
 {
   "name": "hub-3a-payment-encoder",
-  "version": "1.3.1",
+  "version": "1.3.2",
   "description": "Croatian HUB-3A payment slip encoder for 2D barcode generation",
   "type": "module",
   "main": "./dist/index.js",
