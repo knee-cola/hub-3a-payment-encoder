@@ -53,6 +53,28 @@ export function IsIBANValid(iban: string):boolean {
 }
 
 /**
+ * Validates the amount (iznos) according to defined pattern and maximum length
+ * @param iznos 
+ * @param result 
+ * @returns 
+ */
+export function ValidateIznos(iznos: string, result: ValidationResult = ValidationResult.OK):ValidationResult {
+
+    const fieldLength = GetLength(iznos);
+
+    if (fieldLength > MaxLengths.Price) {
+        result |= ValidationResult.PriceMaxLengthExceeded;
+    }
+
+    if (StringNotDefinedOrEmpty(iznos) || (fieldLength == -1 || iznos.match(_pricePattern) == null)) {
+        result |= ValidationResult.PricePatternInvalid;
+    }
+
+    return result;
+}
+
+
+/**
  * Validira sve parametre plaćanja
  * @param {PaymentParams} paymentParams parametri koje treba validirati
  * @returns {boolean}
@@ -66,14 +88,7 @@ export function ValidatePaymentParams(paymentParams: PaymentParams, settings:Bar
     let fieldLength: number = -1;
 
     // Price
-    fieldLength = GetLength(paymentParams.Iznos);
-    if (fieldLength > MaxLengths.Price) {
-        result |= ValidationResult.PriceMaxLengthExceeded;
-    }
-
-    if (StringNotDefinedOrEmpty(paymentParams.Iznos) || (fieldLength == -1 || paymentParams.Iznos.match(_pricePattern) == null)) {
-        result |= ValidationResult.PricePatternInvalid;
-    }
+    result = ValidateIznos(paymentParams.Iznos, result);
 
     // Payer name
     fieldLength = GetLength(paymentParams.ImePlatitelja);
